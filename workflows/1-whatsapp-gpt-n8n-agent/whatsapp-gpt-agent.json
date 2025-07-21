@@ -1,0 +1,350 @@
+{
+  "name": "support-agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dee1eb61-ded3-4b91-948c-58c912437980",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "caaa5cc3-a410-4217-b65d-0a99c890eca7",
+      "name": "Webhook",
+      "webhookId": "dee1eb61-ded3-4b91-948c-58c912437980"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "08c12d44-a747-45ca-9301-ea02be94f74c",
+              "name": "userPhone",
+              "value": "={{ $json[\"body\"][\"from\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "e3a35bd3-158f-428c-befd-76f596cab408",
+              "name": "userMessage",
+              "value": "={{ $json[\"body\"][\"message\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "6c16844e-eacd-4233-9733-9abcb61f604c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a helpful support agent. Please respond clearly and concisely to this customer message:\n\n{{ $json[\"userMessage\"] }}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 100,
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        440,
+        0
+      ],
+      "id": "9ce32529-5436-4307-a515-42189bf7ee6d",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "KYzKhytCe7Mw6Rln",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"reply\": \"{{ $json.reply }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1220,
+        -200
+      ],
+      "id": "5fcb706c-fe32-4af0-97fb-3fb7b6224b91",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO messages (user_phone, user_message, reply)\nVALUES (\n  '{{ $json[\"userPhone\"] }}',\n  '{{ $json[\"userMessage\"] }}',\n  '{{ $json[\"reply\"] }}'\n);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1240,
+        0
+      ],
+      "id": "495d34bb-2d18-491c-b617-3b3b8f9cab12",
+      "name": "MySQL",
+      "credentials": {
+        "mySql": {
+          "id": "AAuA9w0LDklcbn1W",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "915c032f-84e2-46e0-b61e-a78b5dc9cd4d",
+              "name": "userPhone",
+              "value": "={{ $node[\"Edit Fields\"].json[\"userPhone\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "9e2389fe-f13b-41e7-b91e-5d67e4ac83bc",
+              "name": "userMessage",
+              "value": "={{$node[\"Edit Fields\"].json[\"userMessage\"]}}",
+              "type": "string"
+            },
+            {
+              "id": "22ce7759-7228-4d1d-8bc9-54b68fd43759",
+              "name": "reply",
+              "value": "={{ $json[\"message\"][\"content\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        0
+      ],
+      "id": "3ce9677b-4d20-423e-a0f8-d5437407fdea",
+      "name": "Prepare Response"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8a770abb-fe56-49db-86ad-6c15b1ee571b",
+              "name": "data",
+              "value": "=From: {{$json[\"userPhone\"]}}\nMessage: {{$json[\"userMessage\"]}}\nReply: {{$json[\"reply\"]}}\n---\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        220
+      ],
+      "id": "5c93432f-b748-47c3-8107-214556a61b7e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        220
+      ],
+      "id": "1f092fa6-d61d-438d-8a42-849c45fa5894",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/tmp/messages-log.txt",
+        "options": {
+          "append": true
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1460,
+        220
+      ],
+      "id": "979d498e-298c-4002-9f31-f12baec0121f",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v19.0/whatsappid/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer <<whatsappatuth token>>"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"97112345678\",\n  \"type\": \"template\",\n  \"template\": {\n    \"name\": \"hello_world\",\n    \"language\": {\n      \"code\": \"en\"\n    },\n    \"components\": [\n      {\n        \"type\": \"body\",\n        \"parameters\": [\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.reply }}\"\n          }\n        ]\n      }\n    ]\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1060,
+        -460
+      ],
+      "id": "73040ae7-222d-4a97-8ae1-4185f7e45d52",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Prepare Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        []
+      ]
+    },
+    "Prepare Response": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "07ae04b5-2f16-4fb0-b5c9-896c211346d7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "36ff5823de645247c409d00d5ed0aecd5c29499b9cb9437a651601e2b22aaceb"
+  },
+  "id": "51s21hpgO8N2pD7d",
+  "tags": []
+}
