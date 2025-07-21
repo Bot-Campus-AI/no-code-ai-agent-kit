@@ -213,23 +213,27 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://graph.facebook.com/v19.0/whatsappid/messages",
-        "sendHeaders": true,
-        "headerParameters": {
+        "url": "https://api.twilio.com/2010-04-01/Accounts/AC******/Messages.json",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
           "parameters": [
             {
-              "name": "Authorization",
-              "value": "Bearer <<whatsappatuth token>>"
+              "name": "To",
+              "value": "whatsapp:+91*******"
             },
             {
-              "name": "Content-Type",
-              "value": "application/json"
+              "name": "From",
+              "value": "whatsapp:+14155238886"
+            },
+            {
+              "name": "Body",
+              "value": "This is Bot Campus Live workshop"
             }
           ]
         },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"97112345678\",\n  \"type\": \"template\",\n  \"template\": {\n    \"name\": \"hello_world\",\n    \"language\": {\n      \"code\": \"en\"\n    },\n    \"components\": [\n      {\n        \"type\": \"body\",\n        \"parameters\": [\n          {\n            \"type\": \"text\",\n            \"text\": \"{{ $json.reply }}\"\n          }\n        ]\n      }\n    ]\n  }\n}\n",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -239,7 +243,13 @@
         -460
       ],
       "id": "73040ae7-222d-4a97-8ae1-4185f7e45d52",
-      "name": "HTTP Request"
+      "name": "HTTP Request",
+      "credentials": {
+        "twilioApi": {
+          "id": "******",
+          "name": "Twilio account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -340,7 +350,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "07ae04b5-2f16-4fb0-b5c9-896c211346d7",
+  "versionId": "917cbac5-f79c-4e67-a93d-0eb3d5deeee8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "36ff5823de645247c409d00d5ed0aecd5c29499b9cb9437a651601e2b22aaceb"
