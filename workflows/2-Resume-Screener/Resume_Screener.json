@@ -1,0 +1,285 @@
+{
+  "name": "Resume Screener",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "resume-screener",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryBinary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "35b13179-868c-44cd-bea4-8b35c6e3a016",
+      "name": "Webhook",
+      "webhookId": "e080ddaa-c708-456e-91b2-5d32f8a2568a",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "17b50807-d800-4db5-bfee-c1be36eefcfb",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert resume screener.\n\nBelow is a candidate’s resume text:\n\n{{$node[\"Extract from File\"].json[\"text\"]}}\n\nBased on the resume, return:\n- candidate name\n- Total years of experience\n- Key technical and domain skills\n- Suitability for an AI Trainer role (Yes/No and why)\n- 3 tags to categorize this profile (e.g., \"Python\", \"Cloud\", \"Trainer\")\n\nRespond in JSON format like:\n{\n  \"experience_years\": \"...\",\n  \"skills\": [\"...\"],\n  \"is_fit_for_ai_trainer\": \"...\",\n  \"reason\": \"...\",\n  \"tags\": [\"...\", \"...\", \"...\"]\n}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        660,
+        0
+      ],
+      "id": "4d73f1eb-e784-4984-98b5-ac971124caa1",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "__REPLACE_ME__",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2fca8dad-edde-46a6-b7e8-3a765ba3b794",
+              "name": "name",
+              "value": "={{ JSON.parse($json[\"message\"][\"content\"]).candidate_name }}",
+              "type": "string"
+            },
+            {
+              "id": "c55fb20f-667f-475a-b911-842242688723",
+              "name": "is_fit_for_ai_trainer",
+              "value": "={{ JSON.parse($json[\"message\"][\"content\"])[\"is_fit_for_ai_trainer\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "46a5ade7-c1e4-4416-b74f-24a07c300803",
+              "name": "reason",
+              "value": "={{ JSON.parse($json[\"message\"][\"content\"])[\"reason\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "76de1017-a4e2-4a5a-b7a6-77a88ce69055",
+              "name": "skills",
+              "value": "={{ JSON.parse($json[\"message\"][\"content\"])[\"skills\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "7c8d6faa-d916-4dc6-82cc-1c92a6b1127b",
+              "name": "tags",
+              "value": "={{ JSON.parse($json[\"message\"][\"content\"])[\"tags\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "d6dd8164-a27c-49d4-8125-65b2e489e0d2",
+              "name": "timestamp",
+              "value": "={{ $now.toFormat(\"ccc, dd LLL yyyy\")\t }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        0
+      ],
+      "id": "5d2cf965-2e77-4242-8f5c-8bdeb3828caf",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ZAUuWYQlcLeFQyCKOrmVJp0BB23md46NZNs3bGKhSfw",
+          "mode": "list",
+          "cachedResultName": "AI Trainer Candidates",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZAUuWYQlcLeFQyCKOrmVJp0BB23md46NZNs3bGKhSfw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZAUuWYQlcLeFQyCKOrmVJp0BB23md46NZNs3bGKhSfw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Candidate Name": "={{ $json.name }}",
+            "Fit for AI Trainer ": "={{ $json.is_fit_for_ai_trainer }}",
+            "Reason": "={{ $json.reason }}",
+            "Skills": "={{ $json.skills }}",
+            "Tags": "={{ $json.tags }}",
+            "Timestamp": "={{ $json.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Candidate Name",
+              "displayName": "Candidate Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fit for AI Trainer ",
+              "displayName": "Fit for AI Trainer ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reason",
+              "displayName": "Reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Skills",
+              "displayName": "Skills",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tags",
+              "displayName": "Tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1240,
+        0
+      ],
+      "id": "6a6a04c1-2759-4161-8897-af0547445ec5",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "__REPLACE_ME__",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "40cb3311-045d-43e0-9f74-c17cad958fd1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "36ff5823de645247c409d00d5ed0aecd5c29499b9cb9437a651601e2b22aaceb"
+  },
+  "id": "lHAKR93tbSPjUSQx",
+  "tags": []
+}
