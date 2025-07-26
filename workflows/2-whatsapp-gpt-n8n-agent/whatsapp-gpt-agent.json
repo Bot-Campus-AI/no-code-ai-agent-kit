@@ -78,7 +78,7 @@
       "name": "OpenAI",
       "credentials": {
         "openAiApi": {
-          "id": "KYzKhytCe7Mw6Rln",
+          "id": "__ReplaceMe__",
           "name": "OpenAi account"
         }
       }
@@ -114,7 +114,7 @@
       "name": "MySQL",
       "credentials": {
         "mySql": {
-          "id": "AAuA9w0LDklcbn1W",
+          "id": "__ReplaceMe__",
           "name": "MySQL account"
         }
       }
@@ -246,7 +246,7 @@
       "name": "HTTP Request",
       "credentials": {
         "twilioApi": {
-          "id": "******",
+          "id": "__ReplaceMe__",
           "name": "Twilio account"
         }
       }

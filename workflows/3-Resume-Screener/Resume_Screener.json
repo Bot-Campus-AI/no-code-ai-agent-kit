@@ -124,17 +124,17 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "1ZAUuWYQlcLeFQyCKOrmVJp0BB23md46NZNs3bGKhSfw",
+          "value": "__ReplaceMe__",
           "mode": "list",
           "cachedResultName": "AI Trainer Candidates",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZAUuWYQlcLeFQyCKOrmVJp0BB23md46NZNs3bGKhSfw/edit?usp=drivesdk"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/__ReplaceMe__/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ZAUuWYQlcLeFQyCKOrmVJp0BB23md46NZNs3bGKhSfw/edit#gid=0"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/__ReplaceMe__/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",

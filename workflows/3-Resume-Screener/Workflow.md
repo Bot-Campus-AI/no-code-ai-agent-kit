@@ -116,4 +116,8 @@ Each node is modular for:
 * Run the workflow
 * Check Google Sheet for rows
 
+
 ---
+
+📌 **Copyright © BotCampus AI. All rights reserved.**
+

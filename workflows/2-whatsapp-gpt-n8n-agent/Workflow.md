@@ -195,4 +195,8 @@ Export the workflow as JSON and save to:
 ai-agent-workshop/ai-agent-workshop/instructions/workflows/whatsapp-gpt-agent.json
 ```
 
+
 ---
+
+📌 **Copyright © BotCampus AI. All rights reserved.**
+

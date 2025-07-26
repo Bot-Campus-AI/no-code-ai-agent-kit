@@ -1,0 +1,262 @@
+{
+  "name": "Your First AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1040,
+        -656
+      ],
+      "id": "2019277c-30eb-4098-8eb1-0f31cb7b5bcb",
+      "name": "When chat message received",
+      "notes": "© 2025 Abdullah Khan - BotCampus AI"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        -864
+      ],
+      "id": "418959e9-d07d-4a9e-bb9f-f02d4dac08a2",
+      "name": "AI Agent",
+      "notes": "© 2025 Abdullah Khan - BotCampus AI"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -528,
+        -352
+      ],
+      "id": "329c4bd5-6c40-4c56-8e11-d3e184b843c6",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "__ReplaceMe__",
+          "name": "OpenAi account"
+        }
+      },
+      "notes": "© 2025 Abdullah Khan - BotCampus AI"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        -352
+      ],
+      "id": "8fa54270-c0e6-44d1-8630-3c3aa4042f35",
+      "name": "Simple Memory",
+      "notes": "© 2025 Abdullah Khan - BotCampus AI"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Gets weather information",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=25.2&longitude=55.27&hourly=temperature_2m,rain&timezone=auto&forecast_days=1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        576,
+        -400
+      ],
+      "id": "7896dccf-e5be-4b2e-930d-48850c13d022",
+      "name": "get_weather",
+      "notes": "© 2025 Abdullah Khan - BotCampus AI"
+    },
+    {
+      "parameters": {
+        "sendTo": "support@botcampus.ai",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "emailType": "text",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', `replace the [Recipient's Name] with the name of the To mail id and replace the signature \"Your Name\" with BotCampus AI`, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        768,
+        -400
+      ],
+      "id": "e84cb512-edd1-4b9e-959c-9abb5be14cc4",
+      "name": "Send a message in Gmail",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "__ReplaceMe__",
+          "name": "Gmail account"
+        }
+      },
+      "notes": "© 2025 Abdullah Khan - BotCampus AI"
+    },
+    {
+      "parameters": {
+        "content": "## 💬 The Chat Interface\n\nFirst connect Gemini (see red sticky note below). Then click the **🗨 Open chat** button and try asking:\n\n* “What’s the weather in Dubai?”\n* “Get me the latest AI news.”\n* “Give me ideas for n8n AI agents.”",
+        "height": 412,
+        "width": 316,
+        "color": 7
+      },
+      "id": "5fe0f3e0-0f93-4510-829a-6ea8788399fb",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        -1136,
+        -912
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n⚠️ To use ChatGPT, you’ll need an API key from Open AI:\n\n1. **Visit Open AI Playground**\n   Go to [Platform Open AI Settings](https://platform.openai.com/settings)\n\n2. **Create Your Key**\n    Go to **API Keys** on the left nav\n   Click **“Create new secret”** and copy the key.\n\n3. **Add It to n8n**\n   In the ChatGPT node:\n\n   * Click **Credential → Create New**\n   * Paste the key into the **API Key** field\n   * Click **Save**\n",
+        "height": 528,
+        "width": 320,
+        "color": 3
+      },
+      "id": "63bee21c-037f-460b-b626-871d360921c1",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Sticky Note17",
+      "type": "n8n-nodes-base.stickyNote",
+      "width": 380,
+      "height": 380,
+      "creator": "Lucas Peyrin",
+      "position": [
+        -640,
+        -400
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis node lets your agent remember the last few messages to stay on topic. Adjust with the **Context Window Length** setting.",
+        "height": 276,
+        "width": 324,
+        "color": 7
+      },
+      "id": "3682a91d-e0fa-4629-a95d-1a0122f74c15",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Sticky Note15",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        -80,
+        -384
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThese tools let your agent bring in real-world data.\n\nIt can check the current weather or Send a mail to anyone — great for creating more helpful and relevant responses",
+        "height": 324,
+        "width": 436,
+        "color": 7
+      },
+      "id": "d427ae27-e118-4395-966d-0be14f603d67",
+      "cid": "Ikx1Y2FzIFBleXJpbiI",
+      "name": "Sticky Note16",
+      "type": "n8n-nodes-base.stickyNote",
+      "creator": "Lucas Peyrin",
+      "position": [
+        496,
+        -432
+      ],
+      "typeVersion": 1,
+      "notes": "© 2025 Lucas Peyrin"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_weather": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "61748338-daad-45ce-8fce-25d743a7af0e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "36ff5823de645247c409d00d5ed0aecd5c29499b9cb9437a651601e2b22aaceb"
+  },
+  "id": "gIx5fyh1eMwPgU7Q",
+  "tags": []
+}
