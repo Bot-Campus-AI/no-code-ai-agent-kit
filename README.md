@@ -1,9 +1,11 @@
 
-# 🤖 AI Agent Workshop – BotCampus AI
+---
 
-Welcome to the official repository for the **AI Agent Workshop** powered by **BotCampus AI**.
+# 🤖 No-Code AI Agent Kit – BotCampus AI
 
-This repo contains everything you need to build, test, and deploy your own **AI-powered automation bots** using `n8n`, OpenAI, and WhatsApp Cloud API — all in a no-code/low-code environment.
+Welcome to the official repository for the **No-Code AI Agent Kit** built by **BotCampus AI**.
+
+This repo contains everything you need to build and run your own **AI-powered automation bots** using `n8n`, OpenAI, Google Sheets, and WhatsApp — no coding required.
 
 ---
 
@@ -11,69 +13,85 @@ This repo contains everything you need to build, test, and deploy your own **AI-
 
 ```
 
-ai-agent-workshop/
+no-code-ai-agent-kit/
 │
 ├── README.md                    # You're here
-├── LICENSE                      # (Optional) License file (MIT recommended)
+├── LICENSE                      # Optional license (MIT recommended)
 │
-├── workflows/                   # Ready-to-import n8n flows
-│   ├── support-agent.json       # WhatsApp + GPT Support Bot
-│   ├── daily-report-agent.json  # Google Sheets + GPT Summary Bot
-│   └── lead-qualifier.json      # FB Lead + GPT Classifier Bot
+├── workflows/                   # Plug-and-play n8n agents
+│   ├── whatsapp-gpt-agent.json     # Smart support bot for WhatsApp
+│   ├── daily-report-agent.json     # (Coming soon)
+│   ├── resume-screener.json        # Resume screening + Google Sheets
+│   └── your-first-ai-agent.json    # Starter chatbot agent
 │
-├── assets/                      # Visuals like screenshots or diagrams
-│   └── flow-diagrams.png
-│
-├── instructions/                # Step-by-step setup & usage guides
+├── instructions/                # Setup & usage guides
 │   ├── install-n8n-mac.md
 │   ├── how-to-import-flows.md
 │   └── simulate-webhook.md
 │
-├── templates/                   # Prompt templates & fallback messages
+├── templates/                   # Prompt templates and fallbacks
 │   ├── agent-prompts.md
 │   └── fallback-responses.md
 │
-└── .gitignore                   # Ignores unnecessary system files
+├── assets/                      # Visuals like diagrams and screenshots
+│   └── flow-diagrams.png
+│
+└── .gitignore
 
 ```
 
 ---
 
-## ⚙️ What You’ll Build
+## 🚀 What You’ll Build
 
-During this workshop, you’ll create 3 working AI agents:
+1. **🟢 WhatsApp GPT Agent**  
+   Smart bot that replies to WhatsApp queries via OpenAI.
 
-1. **Support Agent Bot**  
-   Auto-respond to WhatsApp queries using OpenAI
+2. **📄 Resume Screener Agent**  
+   Upload multiple resumes (PDF), extract key skills, evaluate fit for AI Trainer role, and log to Google Sheets.
 
-2. **Daily Report Bot**  
-   Summarize Google Sheets data and send via WhatsApp
-
-3. **Lead Qualifier Bot**  
-   Classify Facebook leads and trigger customized emails
+3. **🟣 Your First AI Agent**  
+   A beginner-friendly chatbot powered by OpenAI and customizable in seconds.
 
 ---
 
-## 🚀 Getting Started
+## 📥 How to Use
 
-1. 📖 Read the setup guide:  
-   [`instructions/install-n8n-mac.md`](instructions/install-n8n-mac.md)
+1. Install `n8n` locally  
+   👉 `instructions/install-n8n-mac.md`
 
-2. 📦 Import a bot from the `workflows/` folder into your local n8n instance
+2. Open `http://localhost:5678` (default n8n instance)
 
-3. 🧪 Test with Postman or simulated webhook calls  
-   See: [`instructions/simulate-webhook.md`](instructions/simulate-webhook.md)
+3. Import any `.json` file from `workflows/`
 
-4. ✏️ Customize prompts in `templates/`
+4. Test the agent via webhook or Postman  
+   👉 `instructions/simulate-webhook.md`
+
+5. Customize prompts in `templates/`
+
+---
+
+## 🧠 Resume Screener Workflow Details
+
+- Accepts multiple resume files via a webhook  
+- Uses GPT-3.5 to extract:
+  - Candidate name
+  - Years of experience
+  - Skills
+  - Fit for AI Trainer role (Yes/No + Reason)
+  - Tags for categorization
+- Appends all data to a connected **Google Sheet**
+
+👉 See: `instructions/simulate-webhook.md`
 
 ---
 
 ## 👥 Who Should Use This Repo?
 
-- Tech enthusiasts exploring AI automation
-- Marketers or product folks who want to build bots without coding
-- Developers experimenting with OpenAI + workflows
-- Workshop participants from BotCampus AI sessions
+- Aspiring AI builders  
+- Automation enthusiasts  
+- Sales/support teams wanting smarter workflows  
+- Participants of **BotCampus AI Workshops**
 
 ---
 
@@ -82,9 +100,10 @@ During this workshop, you’ll create 3 working AI agents:
 Created by **Abdullah Khan**  
 Founder & CEO – [BotCampus AI](https://www.botcampus.ai)
 
-For support, questions, or to join the next live session, contact:  
-📩 `support@botcampus.ai`
+📩 For support or workshops: `support@botcampus.ai`
 
 ---
 
-**Let’s build your first AI Agent — together.**
+**Your AI agents are just one workflow away.** 
+
+---
