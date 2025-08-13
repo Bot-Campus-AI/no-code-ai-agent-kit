@@ -102,6 +102,8 @@ If you see this error:
 * Use **Chrome or Firefox** instead
 * OR disable secure cookie enforcement:
 
+Mac Users can use `export` in Command Prompt:
+
 ```bash
 export N8N_SECURE_COOKIE=false
 n8n
@@ -111,6 +113,14 @@ Windows users can use `set` in Command Prompt:
 
 ```cmd
 set N8N_SECURE_COOKIE=false
+n8n
+```
+if the above doesn't work use the following
+
+```cmd
+export N8N_HOST=localhost
+export N8N_PROTOCOL=http
+export N8N_SECURE_COOKIE=false
 n8n
 ```
 
