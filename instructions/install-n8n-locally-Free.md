@@ -191,46 +191,13 @@ node --version
 
 ### **Option A: Direct Download (Simplest)**
 
-1. Go to https://nodejs.org/en/download/
-2. Click on "Previous Releases" or go to https://nodejs.org/en/download/releases/
-3. Find Node.js 20 LTS (v20.x.x)
-4. Download the Windows Installer (.msi) for your system (64-bit recommended)
-5. Run the installer:
+1. Go to https://nodejs.org/en/download/archive/v20.19.4
+2. Find Node.js 20 LTS (v20.x.x)
+3. Download the Windows Installer (.msi) for your system (64-bit recommended)
+4. Run the installer:
    - Check "Automatically install the necessary tools" during installation
    - Click Next through the installation wizard
    - Restart your command prompt after installation
-
-### **Option B: Using NVM for Windows (Better Version Management)**
-
-```cmd
-# Download nvm-windows from:
-# https://github.com/coreybutler/nvm-windows/releases
-
-# After installing nvm-windows, open a NEW Command Prompt as Administrator
-
-# Install Node.js 20
-nvm install 20
-nvm use 20
-
-# Verify installation
-node --version
-npm --version
-```
-
-### **Option C: Using Chocolatey**
-
-```cmd
-# First, install Chocolatey if not installed
-# Run PowerShell as Administrator and execute:
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
-# Then install Node.js 20
-choco install nodejs --version=20.18.0
-
-# Verify installation
-node --version
-npm --version
-```
 
 ## Step 3: Verify Node.js Installation
 
