@@ -16,27 +16,6 @@ brew uninstall node@22
 
 ## Step 2: Install Node.js 20 LTS
 
-### **Option A: Using NVM (Recommended - Easier Version Management)**
-
-```bash
-# Install NVM (Node Version Manager)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-
-# Reload your terminal configuration
-source ~/.zshrc
-# OR if using bash
-source ~/.bashrc
-
-# Install Node.js 20 LTS
-nvm install 20
-nvm use 20
-nvm alias default 20
-
-# Verify installation
-node --version  # Should show v20.x.x
-npm --version   # Should show 10.x.x or higher
-```
-
 ### **Option B: Using Homebrew**
 
 ```bash
